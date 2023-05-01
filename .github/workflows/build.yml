@@ -1,0 +1,70 @@
+name: Build
+on:
+  repository_dispatch:
+    types: ["build"]
+  push:
+    tags-ignore:
+      - '*'
+    branches:
+      - master
+
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+
+jobs:
+  main:
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        path: master
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ secrets.REPOSITORY }}
+        token: ${{ secrets.GH_PAT }}
+        submodules: recursive
+        path: src
+
+    - uses: actions/setup-node@v3
+      id: setup-node
+      with:
+        node-version: 16
+
+    - name: Build
+      id: build
+      run: |
+        cd src
+        yarn config set "strict-ssl" false -g
+        yarn install
+        yarn build
+        cd -
+
+    - name: Auto Commit
+      id: auto-commit
+      run: |
+        cp -r src/dist/* master/docs
+        cd master
+        git config --global user.email "hi@getgptapi.com"
+        git config --global user.name "getgpt"
+        if [[ `git status --porcelain` ]]; then
+          git add .
+          git commit -m "build: skip ci"
+          git push origin master
+        else
+          echo "no changes"
+        fi
+
+    - name: Notify on Slack
+      uses: act10ns/slack@v1.2.2
+      with:
+        status: ${{ job.status }}
+        channel: '#alert'
+        steps: ${{ toJson(steps) }}
+      if: always()
