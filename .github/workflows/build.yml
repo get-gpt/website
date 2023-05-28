@@ -49,7 +49,8 @@ jobs:
     - name: Auto Commit
       id: auto-commit
       run: |
-        cp -r src/dist/* master/docs
+        cp -rT src/public main/docs
+        cp -rT src/dist main/docs
         cd master
         git config --global user.email "hi@getgptapi.com"
         git config --global user.name "getgpt"
