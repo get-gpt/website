@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0bd5c2"],{"2c50":function(c,n,o){"use strict";o.r(n),n["default"]={"My account":"我的账户","Try ChatGPT":"试用ChatGPT","Contact Us":"联系我们","How to Use":"使用说明","Terms of Service":"服务协议","Privacy Policy":"隐私条款",Continue:"下一步","Return to":"返回",and:"和"}}}]);
