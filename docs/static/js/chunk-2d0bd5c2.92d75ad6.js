@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0bd5c2"],{"2c50":function(t,o,c){"use strict";c.r(o),o["default"]={"My account":"我的账户","Try ChatGPT":"试用ChatGPT","Contact Us":"联系我们","How to Use":"使用说明","Terms of Service":"服务协议","Privacy Policy":"隐私条款",Continue:"下一步","Return to":"返回",and:"和","Get Started":"立即获取","Get ChatGPT Now":"立即获取",close:"关闭"}}}]);
